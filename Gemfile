@@ -1,5 +1,10 @@
 source "https://rubygems.org"
 
+gem 'stripe', '~> 5.0'
+gem 'activeadmin'
+gem 'bulma-rails'
+gem 'sass-rails', '>= 6'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
