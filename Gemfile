@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'stripe', '~> 5.0'
+gem 'stripe', '~> 13.1'
 gem 'activeadmin'
 gem 'bulma-rails'
 gem 'sass-rails', '>= 6'
