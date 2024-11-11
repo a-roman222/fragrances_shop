@@ -1,3 +1,3 @@
 class Genre < ApplicationRecord
-    has_many :fragrances
+    has_many :fragrances, dependent: :destroy
 end
