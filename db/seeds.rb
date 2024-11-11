@@ -58,61 +58,66 @@ Brand.create(
 $all_fragrances = []
 
 def scrape_and_seed
-    url = 'https://www.lasfragancias.com/perfumes/perfumes-de-hombre-premium?PS=24'
-    html = URI.open(url)
-    doc = Nokogiri::HTML(html)
-    fragrances = []
+    # URLs for men's and women's fragrances
+    urls = [
+      'https://www.lasfragancias.com/perfumes/perfumes-de-hombre-premium?PS=48',
+      'https://www.lasfragancias.com/perfumes/perfumes-de-mujer-premium?PS=48'
+    ]
   
-    # Iterate over product list items
-    doc.css('.prateleira.vitrine.n3colunas li.perfumes').each do |perfume|
-      
-      
-      name = perfume.css('.product-name a').text.strip
-      price = perfume.css('.best-price').text.gsub(/[^\d\.]/, '').to_f.round
-      img_url = perfume.css('.product-image img').attr('src').value
-      url = perfume.css('.product-image').attr('href').value
-      brand = perfume.css('.marca-prod a').text.strip
-      description = "#{name} by #{brand}" # Default description; can be customized further
-      
-
-      
-      #availability = product['class'].include?('snize-product-in-stock')
-      availability = true
-  
-      # Assuming static data for stock, genre_id, brand_id, group_id for demonstration
-      stock = 10 # Placeholder value, adjust as necessary
-      genre_id = 1 # Placeholder value for Men's fragrance genre
-      brand_id = 1 # Placeholder, ideally match with brand info you may have
-      group_id = 1 # Placeholder group, adjust as necessary
-
-      $all_fragrances << {
-        name: name,
-        price: price,
-        url_img: img_url,
-        description: description,
-        availability: true,
-        stock: 100,
-        genre: 1,
-        brand: brand,
-        group_id: 1
-      }
-
-      
-  
-      Fragrance.create!(
-        name: name,
-        price: price,
-        url_img: img_url,
-        description: description, # Placeholder description
-        availability: availability,
-        stock: stock,
-        genre_id: genre_id,
-        brand_id: brand_id,
-        group_id: group_id
-      )
+    urls.each do |url|
+      html = URI.open(url)
+      doc = Nokogiri::HTML(html)
+    
+      doc.css('.prateleira.vitrine.n3colunas li.perfumes').each do |perfume|
+        name = perfume.css('.product-name a').text.strip
+        price = perfume.css('.best-price').text.gsub(/[^\d\.]/, '').to_f.round
+        img_url = perfume.css('.product-image img').attr('src').value
+        url = perfume.css('.product-image').attr('href').value
+        brand = perfume.css('.marca-prod a').text.strip
+        description = "#{name} by #{brand}" # Default description; can be customized further
+    
+        availability = true
+        stock = 10
+        genre_id = url.include?('hombre') ? 1 : 2  # Set genre based on URL
+        brand_id = 1 # Placeholder; you should ideally match with brand information
+        group_id = 1 # Placeholder group, adjust as necessary
+    
+        # Add the fragrance to the global array
+        $all_fragrances << {
+          name: name,
+          price: price,
+          url_img: img_url,
+          description: description,
+          availability: true,
+          stock: 100,
+          genre: genre_id,  # Use genre_id dynamically based on the URL
+          brand: brand,
+          group_id: group_id
+        }
+    
+        # Create the fragrance record in the database
+        Fragrance.create!(
+          name: name,
+          price: price,
+          url_img: img_url,
+          description: description, # Placeholder description
+          availability: availability,
+          stock: stock,
+          genre_id: genre_id,
+          brand_id: brand_id,
+          group_id: group_id
+        )
+      end
     end
-    puts "Seeded Men Fragrances"
+  
+    puts "Seeded Fragrances from both Men and Women"
   end
+  
+  # Call the function to scrape and seed
+  scrape_and_seed
+  
+  # Inspect the global fragrances array
+  puts $all_fragrances.inspect
 
 
 
