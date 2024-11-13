@@ -9,11 +9,7 @@
     <div class="column is-one-quarter">
       <div class="card">
         <div class="card-image">
-          <% if fragrance.image.attached? %>
-            <%= image_tag fragrance.image, class: 'image', style: 'width: 100%; height: auto;' %>
-          <% else %>
-            <%= image_tag 'placeholder.jpg', class: 'image', style: 'width: 100%; height: auto;' %>
-          <% end %>
+
         </div>
         <div class="card-content">
           <p class="title is-4"><%= fragrance.name %></p>

@@ -12,7 +12,13 @@
   </div>
   <div class="column is-half">
     <p><strong>Price:</strong> $<%= @fragrance.price %></p>
-    <p> <%= image_tag @fragrance.image %></p>
+    <p> 
+    <% if fragrance.image.attached? %>
+      <%= image_tag fragrance.image, class: 'image', style: 'width: 100%; height: auto;' %>
+    <% else %>
+      <%= image_tag 'placeholder.jpg', class: 'image', style: 'width: 100%; height: auto;' %>
+    <% end %>
+    </p>
     <p><strong>Description:</strong> <%= @fragrance.description %></p>
     <p><strong>Availability:</strong> <%= @fragrance.availability ? 'In Stock' : 'Out of Stock' %></p>
   </div>

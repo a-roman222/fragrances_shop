@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # Set the root path to the fragrances index
   root 'fragrances#index'
-
+  resources :fragrances
   # Admin routes with authentication
   get 'admin_dashboard', to: 'admin#dashboard'
 
