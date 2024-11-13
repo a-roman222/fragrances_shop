@@ -1,0 +1,23 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title">Fragrances</h1>
+    <div class="columns is-multiline">
+      <% @fragrances.each do |fragrance| %>
+        <div class="column is-one-quarter">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <%= image_tag fragrance.url_img %>
+              </figure>
+            </div>
+            <div class="card-content">
+              <p class="title"><%= fragrance.name %></p>
+              <p>$<%= fragrance.price %></p>
+              <%= link_to 'View Details', fragrance_path(fragrance), class: 'button is-link' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
