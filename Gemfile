@@ -1,8 +1,9 @@
 source "https://rubygems.org"
 
-gem 'stripe', '~> 5.0'
-gem 'activeadmin'
 gem 'bulma-rails'
+gem 'activeadmin'
+gem 'devise'
+gem 'stripe', '~> 5.0'
 gem 'sass-rails', '>= 6'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
