@@ -8,3 +8,105 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+require 'nokogiri'
+require 'open-uri'
+
+Fragrance.destroy_all
+Genre.destroy_all
+Group.destroy_all
+Brand.destroy_all
+
+
+ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='fragrances'")
+ActiveRecord::Base.connection.execute("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'genres'")
+
+ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='groups'")
+ActiveRecord::Base.connection.execute("DELETE FROM sqlite_sequence WHERE name='brands'")
+
+genres_list = [
+      'Men',
+      'Women',
+      'Unisex'
+    ]
+genres_list.each do |genre|
+    Genre.create(
+        name: genre,
+    )
+end
+
+puts "Seeded Genres: Men, Women, Unisex"
+
+groups_list = [
+      'On Sale',
+      'New',
+      'Rare Gem'
+    ]
+groups_list.each do |gr|
+    Group.create(
+        name: gr,
+    )
+end
+puts "Seeded Group: On Sale, New, Rare Gem"
+
+# Scrapping from lasfragancias.com
+
+$all_fragrances = []
+$all_brands = []
+
+def scrape_and_seed
+    # URLs for men's and women's fragrances
+    urls = [
+      'https://www.lasfragancias.com/perfumes/perfumes-de-hombre-premium?PS=12',
+      'https://www.lasfragancias.com/perfumes/perfumes-de-mujer-premium?PS=12'
+    ]
+  
+    urls.each do |url|
+      html = URI.open(url)
+      doc = Nokogiri::HTML(html)
+    
+      doc.css('.prateleira.vitrine.n3colunas li.perfumes').each do |perfume|
+        name = perfume.css('.product-name a').text.strip
+        price = perfume.css('.best-price').text.gsub(/[^\d\.]/, '').to_f.round
+        img_url = perfume.css('.product-image img').attr('src').value
+        url = perfume.css('.product-image').attr('href').value
+        brand = perfume.css('.marca-prod a').text.strip
+        description = "#{name.split.map(&:capitalize).join(' ')} by #{brand}" # Default description; can be customized further
+    
+        availability = true
+        stock = 10
+        genre_id = url.include?('hombre') ? 1 : 2  # Set genre based on URL
+        brand_id = 1 # Placeholder; you should ideally match with brand information
+        group_id = 1 # Placeholder group, adjust as necessary
+    
+        # Add the fragrance to the global array
+        $all_fragrances << {
+          name: name.split.map(&:capitalize).join(' '),
+          price: price,
+          url_img: img_url,
+          description: description,
+          availability: true,
+          stock: 100,
+          genre: genre_id,  # Use genre_id dynamically based on the URL
+          brand: brand
+        }
+
+      end
+    end
+    puts "Scrap all Fragrances from both Men and Women"
+  end
+
+# Call the function to scrape and seed
+scrape_and_seed
+
+unique_products = $all_fragrances.uniq { |product| product[:name] }
+unique_brands = unique_products.map { |product| product[:brand] }
+                               .uniq
+                               .map { |brand| brand.split.map(&:capitalize).join(' ') }
+
+# Create Brands
+unique_brands.each do |brand_name|
+  Brand.create(name: brand_name)
+end
+
+# puts unique_products.inspect
