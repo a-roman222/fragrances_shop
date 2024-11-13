@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "cart/show"
   get "fragrances/index"
   get "fragrances/show"
   devise_for :admin_users, ActiveAdmin::Devise.config
