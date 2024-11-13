@@ -10,6 +10,9 @@
 # Ignore all environment files (except templates).
 /.env*
 !/.env*.erb
+# In your .gitignore file
+.env
+
 
 # Ignore all logfiles and tempfiles.
 /log/*
