@@ -1,27 +1,23 @@
 <%= content_for :title, @fragrance.name %>
 
-<h1><%= @fragrance.name %></h1>
+<h1 class="title has-text-centered"><%= @fragrance.name %></h1>
 
-<div class="columns">
+<div class="columns is-centered">
   <div class="column is-half">
-    <% if @fragrance.image.attached? %>
-      <%= image_tag @fragrance.image, class: 'image', style: 'width: 100%; height: auto;' %>
-    <% else %>
-      <%= image_tag 'placeholder.jpg', class: 'image', style: 'width: 100%; height: auto;' %>
-    <% end %>
-  </div>
-  <div class="column is-half">
-    <p><strong>Price:</strong> $<%= @fragrance.price %></p>
-    <p> 
-    <% if fragrance.image.attached? %>
-      <%= image_tag fragrance.image, class: 'image', style: 'width: 100%; height: auto;' %>
-    <% else %>
-      <%= image_tag 'placeholder.jpg', class: 'image', style: 'width: 100%; height: auto;' %>
-    <% end %>
-    </p>
-    <p><strong>Description:</strong> <%= @fragrance.description %></p>
-    <p><strong>Availability:</strong> <%= @fragrance.availability ? 'In Stock' : 'Out of Stock' %></p>
+    <div class="card">
+      <div class="card-image">
+        <figure class="image is-4by3">
+          <img src="<%= @fragrance.url_img %>" alt="<%= @fragrance.name %>" class="is-static">
+        </figure>
+      </div>
+      <div class="card-content">
+        <p class="is-size-4"><strong>Price:</strong> $<%= @fragrance.price %></p>
+        <p><strong>Description:</strong> <%= @fragrance.description %></p>
+        <p><strong>Availability:</strong> <%= @fragrance.availability ? 'In Stock' : 'Out of Stock' %></p>
+      </div>
+      <footer class="card-footer">
+        <%= link_to 'Back to List', fragrances_path, class: 'button is-link card-footer-item' %>
+      </footer>
+    </div>
   </div>
 </div>
-
-<%= link_to 'Back to List', fragrances_path, class: 'button is-link' %>

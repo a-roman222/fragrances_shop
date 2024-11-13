@@ -1,25 +1,49 @@
-
 <%= content_for :title, 'Fragrances' %>
 
-<h1>Fragrances</h1>
-<%= paginate @fragrances %> <!-- Pagination controls -->
+<!-- Page Header -->
+<section class="hero is-info is-small">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">Fragrances</h1>
+      <p class="subtitle">Explore our premium collection of perfumes</p>
+    </div>
+  </div>
+</section>
 
-<div class="columns is-multiline">
+<!-- Pagination Controls -->
+<%= paginate @fragrances %>
+
+<!-- Product Cards -->
+<div class="columns is-multiline is-mobile">
   <% @fragrances.each do |fragrance| %>
-    <div class="column is-one-quarter">
+    <div class="column is-12-mobile is-6-tablet is-4-desktop">
       <div class="card">
+        <!-- Image Section -->
         <div class="card-image">
-
+          <figure class="image is-4by3">
+            <img src="<%= fragrance.url_img %>" alt="<%= fragrance.name %>">
+          </figure>
         </div>
+
+        <!-- Card Content -->
         <div class="card-content">
-          <p class="title is-4"><%= fragrance.name %></p>
-          <p class="subtitle is-6">$<%= fragrance.price %></p>
-          <%= link_to 'View Details', fragrance_path(fragrance), class: 'button is-primary' %>
+          <div class="media">
+            <div class="media-content">
+              <!-- Fragrance Name -->
+              <p class="title is-5"><%= fragrance.name %></p>
+              <!-- Price -->
+              <p class="subtitle is-6">$<%= fragrance.price %></p>
+            </div>
+          </div>
+
+          <div class="content">
+            <%= link_to 'View Details', fragrance_path(fragrance), class: 'button is-link is-fullwidth' %>
+          </div>
         </div>
       </div>
     </div>
   <% end %>
 </div>
 
-<%= paginate @fragrances %> <!-- Pagination controls again at the bottom -->
-
+<!-- Pagination Controls Again -->
+<%= paginate @fragrances %>
