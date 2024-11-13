@@ -1,0 +1,73 @@
+<%= form_with(model: fragrance, local: true) do |form| %>
+    <% if fragrance.errors.any? %>
+      <div class="notification is-danger">
+        <h4 class="title is-4">There were errors with your form:</h4>
+        <ul>
+          <% fragrance.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <!-- Fragrance Name -->
+    <div class="field">
+      <%= form.label :name, class: 'label' %>
+      <div class="control">
+        <%= form.text_field :name, class: 'input', required: true %>
+      </div>
+    </div>
+  
+    <!-- Price -->
+    <div class="field">
+      <%= form.label :price, class: 'label' %>
+      <div class="control">
+        <%= form.number_field :price, class: 'input', required: true, min: 0 %>
+      </div>
+    </div>
+  
+    <!-- Description -->
+    <div class="field">
+      <%= form.label :description, class: 'label' %>
+      <div class="control">
+        <%= form.text_area :description, class: 'textarea', required: true %>
+      </div>
+    </div>
+  
+    <!-- Availability -->
+    <div class="field">
+      <%= form.label :availability, class: 'label' %>
+      <div class="control">
+        <%= form.check_box :availability, class: 'checkbox' %> Available
+      </div>
+    </div>
+  
+    <!-- Stock -->
+    <div class="field">
+      <%= form.label :stock, class: 'label' %>
+      <div class="control">
+        <%= form.number_field :stock, class: 'input', required: true, min: 0 %>
+      </div>
+    </div>
+  
+    <!-- Image Upload -->
+    <div class="field">
+      <%= form.label :image, class: 'label' %>
+      <div class="control">
+        <%= form.file_field :image, class: 'input' %>
+      </div>
+      <% if fragrance.image.attached? %>
+        <div class="image-preview">
+          <%= image_tag fragrance.image, class: 'preview-image', style: 'width: 100%; height: auto;' %>
+        </div>
+      <% end %>
+    </div>
+  
+    <!-- Submit Button -->
+    <div class="field">
+      <div class="control">
+        <%= form.submit class: 'button is-primary' %>
+      </div>
+    </div>
+  <% end %>
+  

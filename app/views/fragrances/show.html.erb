@@ -1,9 +1,21 @@
-<section class="section">
-  <div class="container">
-    <h1 class="title"><%= @fragrance.name %></h1>
-    <img src="<%= @fragrance.url_img %>" alt="<%= @fragrance.name %>">
-    <p><%= @fragrance.description %></p>
-    <p>$<%= @fragrance.price %></p>
-  </div>
-</section>
+<%= content_for :title, @fragrance.name %>
 
+<h1><%= @fragrance.name %></h1>
+
+<div class="columns">
+  <div class="column is-half">
+    <% if @fragrance.image.attached? %>
+      <%= image_tag @fragrance.image, class: 'image', style: 'width: 100%; height: auto;' %>
+    <% else %>
+      <%= image_tag 'placeholder.jpg', class: 'image', style: 'width: 100%; height: auto;' %>
+    <% end %>
+  </div>
+  <div class="column is-half">
+    <p><strong>Price:</strong> $<%= @fragrance.price %></p>
+    <p> <%= image_tag @fragrance.image %></p>
+    <p><strong>Description:</strong> <%= @fragrance.description %></p>
+    <p><strong>Availability:</strong> <%= @fragrance.availability ? 'In Stock' : 'Out of Stock' %></p>
+  </div>
+</div>
+
+<%= link_to 'Back to List', fragrances_path, class: 'button is-link' %>

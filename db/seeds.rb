@@ -7,6 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+AdminUser.destroy_all
+ActiveRecord::Base.connection.execute("UPDATE sqlite_sequence SET seq = 0 WHERE name = 'admin_users'")
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
 
 require 'nokogiri'
@@ -69,10 +71,10 @@ def scrape_and_seed
         name = perfume.css('.product-name a').text.strip
         price = perfume.css('.best-price').text.gsub(/[^\d\.]/, '').to_f.round
         img_url = perfume.css('.product-image img').attr('src').value
-        url = perfume.css('.product-image').attr('href').value
+        # url = perfume.css('.product-image').attr('href').value
         brand = perfume.css('.marca-prod a').text.strip
         description = "#{name.split.map(&:capitalize).join(' ')} by #{brand}" # Default description; can be customized further
-    
+        puts(url)
         availability = true
         stock = 10
         genre_id = url.include?('hombre') ? 1 : 2  # Set genre based on URL
@@ -99,14 +101,34 @@ def scrape_and_seed
 # Call the function to scrape and seed
 scrape_and_seed
 
-unique_products = $all_fragrances.uniq { |product| product[:name] }
+unique_products = $all_fragrances.uniq { |product| [product[:name], product[:genre]] }
+# unique_products = $all_fragrances
 unique_brands = unique_products.map { |product| product[:brand] }
                                .uniq
                                .map { |brand| brand.split.map(&:capitalize).join(' ') }
+brand_records = unique_brands.map { |name| Brand.find_or_create_by(name: name) }
 
 # Create Brands
 unique_brands.each do |brand_name|
   Brand.create(name: brand_name)
 end
 
-# puts unique_products.inspect
+# Create Fragrances
+unique_products.each do |fragrance_data|
+  brand = brand_records.find { |b| b.name.casecmp(fragrance_data[:brand]) == 0 }
+  if brand
+    Fragrance.create(
+      name: fragrance_data[:name],
+      price: fragrance_data[:price],
+      url_img: fragrance_data[:url_img],
+      description: fragrance_data[:description],
+      availability: fragrance_data[:availability],
+      stock: fragrance_data[:stock],
+      genre_id: fragrance_data[:genre], 
+      group_id: 1,  # Rmake random (1-3)
+      brand_id: brand.id
+    )
+  else
+    puts "Brand not found for #{fragrance_data[:name]}"
+  end
+end

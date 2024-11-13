@@ -1,18 +1,18 @@
 ActiveAdmin.register Fragrance do
+  permit_params :name, :price, :url_img, :description, :availability, :stock, :genre_id, :group_id, :brand_id
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-  # permit_params :name, :price, :url_img, :description, :availability, :stock, :genre_id, :group_id, :brand_id
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:name, :price, :url_img, :description, :availability, :stock, :genre_id, :group_id, :brand_id]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
-  
+  form do |f|
+    f.inputs do
+      f.input :name
+      f.input :price
+      f.input :description
+      f.input :availability
+      f.input :stock
+      f.input :genre
+      f.input :group
+      f.input :brand
+      f.input :url_img, as: :file
+    end
+    f.actions
+  end
 end
