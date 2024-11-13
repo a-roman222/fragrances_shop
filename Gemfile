@@ -5,6 +5,7 @@ gem 'activeadmin'
 gem 'devise'
 gem 'stripe', '~> 5.0'
 gem 'sass-rails', '>= 6'
+gem 'dotenv-rails', groups: [:development, :test]
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2"
