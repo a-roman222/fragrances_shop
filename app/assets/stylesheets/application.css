@@ -14,3 +14,15 @@
  *= require_self
  */
  @import "bulma";
+
+  /* Use the variable on the card */
+.card {
+    background-color: DarkCyan !important;
+}
+
+.card-image {
+    object-fit: cover; /* Ensures the image covers the container without stretching */
+    width: auto; /* Forces the image to take the full width of its container */
+    height: 100%; /* Maintains the original aspect ratio */
+  }
+  
