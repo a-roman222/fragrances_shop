@@ -5,7 +5,11 @@ class FragrancesController < ApplicationController
   end
   
   def index
-    @fragrances = Fragrance.page(params[:page]).per(10)
+    @q = Fragrance.ransack(params[:q])
+    @fragrances = @q.result.includes(:brand, :genre, :group).page(params[:page]).per(10)
+    @brands = Brand.all
+    @genres = Genre.all
+    @groups = Group.all
   end
 
   def show
