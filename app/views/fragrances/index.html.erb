@@ -82,7 +82,12 @@
         <!-- Image Section -->
         <div class="card-image">
           <figure class="image">
-            <img src="<%= fragrance.url_img %>" alt="<%= fragrance.name %>">
+            <!-- Display the attached image using ActiveStorage -->
+            <% if fragrance.image.attached? %>
+              <%= image_tag fragrance.image %>  <!-- Automatically generates the image tag -->
+            <% else %>
+              <%= image_tag 'default_image.jpg' %>  <!-- Fallback image if no image is attached -->
+            <% end %>
           </figure>
         </div>
 

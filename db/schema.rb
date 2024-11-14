@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_13_032629) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_14_162927) do
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -122,14 +122,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_13_032629) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "images", force: :cascade do |t|
-    t.integer "fragrance_id", null: false
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["fragrance_id"], name: "index_images_on_fragrance_id"
-  end
-
   create_table "order_items", force: :cascade do |t|
     t.integer "order_id", null: false
     t.integer "product_id"
@@ -176,7 +168,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_13_032629) do
   add_foreign_key "fragrances", "brands"
   add_foreign_key "fragrances", "genres"
   add_foreign_key "fragrances", "groups"
-  add_foreign_key "images", "fragrances"
   add_foreign_key "order_items", "orders"
   add_foreign_key "orders", "order_statuses"
 end
