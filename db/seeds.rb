@@ -52,8 +52,9 @@ $all_brands = []
 def scrape_and_seed
   # URLs for men's and women's fragrances
   urls = [
-    'https://www.lasfragancias.com/perfumes/perfumes-de-hombre-premium?PS=12',
-    'https://www.lasfragancias.com/perfumes/perfumes-de-mujer-premium?PS=12'
+    'https://www.lasfragancias.com/perfumes/perfumes-de-hombre-premium?PS=48',
+    'https://www.lasfragancias.com/perfumes/perfumes-de-mujer-premium?PS=48',
+    'https://www.lasfragancias.com/perfumes/perfumes-unisex-premium?O=OrderByPriceDESC&PS=24'
   ]
 
   urls.each do |url|
@@ -69,7 +70,14 @@ def scrape_and_seed
       puts(url)
       availability = true
       stock = 10
-      genre_id = url.include?('hombre') ? 1 : 2  # Set genre based on URL
+      # genre_id = url.include?('hombre') ? 1 : 2  # Set genre based on URL
+      genre_id = if url.include?('hombre')
+        1
+      elsif url.include?('mujer')
+        2
+      else
+        3 
+      end
       brand_id = 1 # Placeholder; you should ideally match with brand information
       group_id = 1 # Placeholder group, adjust as necessary
   

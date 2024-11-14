@@ -68,35 +68,7 @@
 <div class="columns is-multiline is-mobile">
   <% @fragrances.each do |fragrance| %>
     <div class="column is-12-mobile is-6-tablet is-4-desktop">
-      <div class="card">
-        <!-- Image Section -->
-        <div class="card-image">
-          <figure class="image">
-            <!-- Display the attached image using ActiveStorage -->
-            <% if fragrance.image.attached? %>
-              <%= image_tag fragrance.image %>  <!-- Automatically generates the image tag -->
-            <% else %>
-              <%= image_tag 'default_image.jpg' %>  <!-- Fallback image if no image is attached -->
-            <% end %>
-          </figure>
-        </div>
-
-        <!-- Card Content -->
-        <div class="card-content">
-          <div class="media">
-            <div class="media-content">
-              <!-- Fragrance Name -->
-              <p class="title is-5"><%= fragrance.name %></p>
-              <!-- Price -->
-              <p class="subtitle is-6">$<%= fragrance.price %></p>
-            </div>
-          </div>
-
-          <div class="content">
-            <%= link_to 'View Details', fragrance_path(fragrance), class: 'button is-link is-fullwidth' %>
-          </div>
-        </div>
-      </div>
+      <%= render 'fragrances/fragrance_card', fragrance: fragrance %>  <!-- Render the fragrance card partial -->
     </div>
   <% end %>
 </div>
