@@ -1,13 +1,20 @@
 <%= content_for :title, @fragrance.name %>
-
-<h1 class="title has-text-centered"><%= @fragrance.name %></h1>
+<br>
+<h1 class="title has-text-centered has-text-primary"><%= @fragrance.name %></h1>
 
 <div class="columns is-centered">
   <div class="column is-half">
     <div class="card">
       <div class="card-image">
         <figure class="image">
-          <img src="<%= @fragrance.url_img %>" alt="<%= @fragrance.name %>" class="is-static">
+         
+
+            <% if @fragrance.image.attached? %>
+              <%= image_tag @fragrance.image %>  <!-- Automatically generates the image tag -->
+            <% else %>
+              <%= image_tag 'default_image.jpg' %>  <!-- Fallback image if no image is attached -->
+            <% end %>
+
         </figure>
       </div>
       <div class="card-content">
