@@ -18,6 +18,7 @@
   /* Use the variable on the card */
 .card {
     background-color: DarkCyan !important;
+    border: 2px solid DarkCyan;
 }
 
 .card-image {
