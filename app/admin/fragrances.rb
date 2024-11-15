@@ -1,5 +1,10 @@
+# app/admin/fragrances.rb
 ActiveAdmin.register Fragrance do
-  permit_params :name, :price, :url_img, :description, :availability, :stock, :genre_id, :group_id, :brand_id
+
+  permit_params :name, :price, :description, :availability, :stock, :brand_id, :genre_id, :group_id, :image
+  # Define filters explicitly to avoid conflicts with image attachments
+  filter :name
+
 
   form do |f|
     f.inputs do
@@ -8,11 +13,29 @@ ActiveAdmin.register Fragrance do
       f.input :description
       f.input :availability
       f.input :stock
+      f.input :brand
       f.input :genre
       f.input :group
-      f.input :brand
-      f.input :url_img, as: :file
+      f.input :image, as: :file # File upload for the image
     end
     f.actions
   end
+
+  index do
+    selectable_column
+    id_column
+    column :name
+    column :price
+    column :description
+    column :availability
+    column :stock
+    column :brand
+    column :genre
+    column :group
+    column "Image" do |fragrance|
+      image_tag fragrance.image, size: "50x50" if fragrance.image.attached?
+    end
+    actions
+  end
+
 end

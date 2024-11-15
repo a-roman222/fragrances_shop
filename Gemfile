@@ -7,6 +7,7 @@ gem 'stripe', '~> 5.0'
 gem 'sass-rails', '>= 6'
 gem 'dotenv-rails', groups: [:development, :test]
 gem 'kaminari'
+gem 'image_processing', '~> 1.2'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.2"

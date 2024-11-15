@@ -1,4 +1,7 @@
 class Fragrance < ApplicationRecord
+
+  validates :name, presence: true
+
   belongs_to :brand
   belongs_to :genre
   belongs_to :group
