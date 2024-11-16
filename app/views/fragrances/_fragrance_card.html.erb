@@ -19,7 +19,7 @@
         <!-- Fragrance Name -->
         <p class="title is-5"><%= fragrance.name %></p>
         <!-- Price -->
-        <p class="subtitle is-6">$<%= fragrance.price %></p>
+        <p class="subtitle is-6"><%= number_to_currency(fragrance.price, unit: "$", precision: 2) %></p>
       </div>
     </div>
 

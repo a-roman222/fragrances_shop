@@ -26,4 +26,8 @@
     width: auto; /* Forces the image to take the full width of its container */
     height: 100%; /* Maintains the original aspect ratio */
   }
+.input {
+  background-color: white !important;
+  color: black !important;
+}
   
